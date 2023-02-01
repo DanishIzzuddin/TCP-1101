@@ -1,3 +1,13 @@
+// **
+// Course: TCP1101 PROGRAMMING FUNDAMENTALS
+// Year: Trimester 1, 2022/23 (T2215)
+// Lab: TT10L
+// Names: SIVAHARRIHARANN A/L RAMANATHAN_1 | AHMAD DANISH IZZUDDIN BIN MOHD ANAS ZAHARI_2 | Muhammad Arief Fahmi Bin Syahril Anuar_3
+// IDs: 1211101643_1 | 1211103286_2 | 1211100528_3
+// Emails: 1211101643@student.mmu.edu.my_1 | 1211103286@student.mmu.edu.my_2 | 1211100528@student.mmu.edu.my_3
+// Phones: 0105090887_1 | 0166319282_2 | +60 12-444 5379_3
+// **
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
