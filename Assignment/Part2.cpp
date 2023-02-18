@@ -47,31 +47,59 @@ void right();
 
 int main()
 {
+    string eleh;
     intro();
     selection();
-    do
+    cout << "-----------------" << endl;
+    cout << "Default Settings!" << endl;
+    cout << "-----------------" << endl;
+    cout << "Number Of Rows : 5" << endl;
+    rows = 5;
+    cout << "Number Of Columns : 7" << endl;
+    columns = 7;
+    cout << "Number Of Zombie : 3" << endl;
+    z = 3;
+    cout << "Do you want to proceed with this setting (Y/N): " << endl;
+    cin >> eleh;
+    if (eleh == "Y" || eleh == "y")
     {
-        cout << "Enter the number of rows: ";
-        cin >> rows;
-        cout << "Enter the number of columns: ";
-        cin >> columns;
+        cout << "Have Fun!! :) \n";
         cout << " " << endl;
-        if (rows % 2 == 0 || columns % 2 == 0)
-            cout << "Please enter odd numbers for the rows and columns" << endl;
-    } while (rows % 2 == 0, columns % 2 == 0);
-    do
+        cout << " " << endl;
+        createGrid();
+    }
+    else if (eleh == "N" || eleh == "n")
     {
-        cout << "Enter the amount of zombies that u want: ";
-        cin >> z;
-        cout << " " << endl;
-        if (z < 2 || z > 9)
+        do
         {
-            cout << "Please enter a number between 2 and 9" << endl;
-        }
-    } while (z < 2 || z > 9);
-
-    createGrid();
-    
+            cout << "Please customise the setting of the game first\n";
+            cout << " ";
+            cout << " ";
+            cout << "Enter the number of rows: ";
+            cin >> rows;
+            cout << "Enter the number of columns: ";
+            cin >> columns;
+            cout << " " << endl;
+            if (rows % 2 == 0 || columns % 2 == 0)
+                cout << "Please enter odd numbers for the rows and columns" << endl;
+        } while (rows % 2 == 0, columns % 2 == 0);
+        do
+        {
+            cout << "Enter the amount of zombies that u want: ";
+            cin >> z;
+            cout << " " << endl;
+            if (z < 2 || z > 9)
+            {
+                cout << "Please enter a number between 2 and 9" << endl;
+            }
+        } while (z < 2 || z > 9);
+        createGrid();
+    }
+    else
+    {
+        cout << "Invalid input, please enter Y or N\n";
+        selection();
+    }
 }
 
 void intro()
@@ -101,13 +129,13 @@ void intro()
 
 void selection()
 {
+
     char answer;
     cout << "Do you want to start the game (Y/N) :";
     cin >> answer;
     if (answer == 'Y' || answer == 'y')
     {
         cout << "Have Fun!! :) \n";
-        cout << "Please customise the setting of the game first\n";
         cout << " " << endl;
     }
     else if (answer == 'N' || answer == 'n')
@@ -141,7 +169,7 @@ void selection()
 }
 
 void createGrid()
-{   
+{
     srand(time(0));
     midRow = (rows + 1) / 2;
     midCol = (columns + 1) / 2;
@@ -160,10 +188,10 @@ void createGrid()
             {
                 grid[i][j] = 'A';
             }
-            else if (i == a_row && j == a_col) 
+            else if (i == a_row && j == a_col)
             {
                 cout << 'A' << "  ";
-            } 
+            }
             else if (i == a_row && j == a_col)
             {
                 cout << grid[i][j] << "  ";
@@ -242,7 +270,7 @@ void createGrid()
             }
             cout << endl;
         }
-        if (zombiePlaced == 0 )
+        if (zombiePlaced == 0)
         {
             cout << "Congratulations! You have finished the game." << endl;
             break;
@@ -255,16 +283,15 @@ void createGrid()
     }
 }
 
-void AposRow() 
+void AposRow()
 {
     grid[a_row][a_col] = 'A';
 }
 
-void AposCol() 
+void AposCol()
 {
     grid[a_row][a_col] = 'A';
 }
-
 
 void start()
 {
@@ -292,7 +319,6 @@ void start()
     {
         left();
         validCommand = true;
-        
     }
     else if (movement == "right")
     {
@@ -336,6 +362,9 @@ void command()
     else if (com == "quit")
     {
         // Quit the game while still in play
+        std::cout << "Thanks for playing! Exiting the game..." << std::endl;
+        // Call any necessary cleanup functions or close any resources
+        exit(0); // This will immediately exit the program with a status code of 0
     }
     else if (com == "help" || com == "Help")
     {
@@ -370,40 +399,140 @@ void command()
 
 void up()
 {
-    if (a_row > 0)
+    while (a_row - 1 >= 0 && grid[a_row - 1][a_col] != '|' && grid[a_row - 1][a_col] != '-')
     {
-        grid[a_row][a_col] = ' ';
-        a_row--;
-        AposRow();
+        if (grid[a_row - 1][a_col] == 'R')
+        {
+            alien_health += 5;
+            grid[a_row - 1][a_col] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row--;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row - 1][a_col] == 'Z')
+        {
+            grid[a_row - 1][a_col] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row--;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row - 1][a_col] == 'H')
+        {
+            alien_health += 10;
+            grid[a_row][a_col] = ' ';
+            a_row--;
+            grid[a_row][a_col] = 'A';
+        }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_row--;
+            grid[a_row][a_col] = 'A';
+        }
     }
 }
 
 void down()
 {
-    if (a_row < rows - 1)
+    while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-')
     {
-        grid[a_row][a_col] = ' ';
-        a_row++;
-        AposRow();
+        if (grid[a_row + 1][a_col] == 'R')
+        {
+            alien_health += 5;            // Alien Health Increase by 5
+            grid[a_row + 1][a_col] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row + 1][a_col] == 'Z')
+        {
+            grid[a_row + 1][a_col] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row + 1][a_col] == 'H')
+        {
+            alien_health += 10;
+            grid[a_row][a_col] = ' ';
+            a_row++;
+            grid[a_row][a_col] = 'A';
+        }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_row++;
+            grid[a_row][a_col] = 'A';
+        }
     }
 }
 
 void left()
 {
-    if (a_col > 0)
+    while (a_col - 1 >= 0 && grid[a_row][a_col - 1] != '|' && grid[a_row][a_col - 1] != '-')
     {
-        grid[a_row][a_col] = ' ';
-        a_col--;
-        AposCol();
+        if (grid[a_row][a_col - 1] == 'R')
+        {
+            alien_health += 5;
+            grid[a_row][a_col - 1] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_col--;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row][a_col - 1] == 'Z')
+        {
+            grid[a_row][a_col - 1] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row][a_col - 1] == 'H')
+        {
+            alien_health += 10;
+            grid[a_row][a_col] = ' ';
+            a_col--;
+            grid[a_row][a_col] = 'A';
+        }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_col--;
+            grid[a_row][a_col] = 'A';
+        }
     }
 }
 
 void right()
 {
-    if (a_col < columns - 1)
+    while (a_col + 1 < columns && grid[a_row][a_col + 1] != '|' && grid[a_row][a_col + 1] != '-')
     {
-        grid[a_row][a_col] = ' ';
-        a_col++;
-        AposCol();
+        if (grid[a_row][a_col + 1] == 'R')
+        {
+            alien_health += 5;
+            grid[a_row][a_col + 1] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_col++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row][a_col + 1] == 'Z')
+        {
+            grid[a_row][a_col + 1] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row][a_col + 1] == 'H')
+        {
+            alien_health += 10;
+            grid[a_row][a_col] = ' ';
+            a_col--;
+            grid[a_row][a_col] = 'A';
+        }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_col++;
+            grid[a_row][a_col] = 'A';
+        }
     }
 }
