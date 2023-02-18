@@ -72,12 +72,12 @@ int main()
     {
         do
         {
-            cout << "Please customise the setting of the game first\n";
-            cout << " ";
-            cout << " ";
-            cout << "Enter the number of rows: ";
+            cout << "Please customise the setting of the game first"  << endl;
+            cout << " " << endl;
+            cout << " " << endl;
+            cout <<"Enter the number of rows: ";
             cin >> rows;
-            cout << "Enter the number of columns: ";
+            cout <<"Enter the number of columns: ";
             cin >> columns;
             cout << " " << endl;
             if (rows % 2 == 0 || columns % 2 == 0)
@@ -427,6 +427,15 @@ void up()
             a_row--;
             grid[a_row][a_col] = 'A';
         }
+        else if (grid[a_row - 1][a_col] == 'P')
+        {
+            zombie_health -= 10;
+            cout << "Zombie Health decrease by 10" << endl;
+            cout << " " << endl;
+            grid[a_row][a_col] = ' ';
+            a_row--;
+            grid[a_row][a_col] = 'A';
+        }
         else
         {
             grid[a_row][a_col] = ' ';
@@ -464,6 +473,15 @@ void down()
             cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_row++;
+            grid[a_row][a_col] = 'A';
+        }
+        else if (grid[a_row + 1][a_col] == 'P')
+        {
+            zombie_health -= 10;
+            cout << "Zombie Health decrease by 10" << endl;
+            cout << " " << endl;
+            grid[a_row][a_col] = ' ';
+            a_row--;
             grid[a_row][a_col] = 'A';
         }
         else
@@ -505,6 +523,15 @@ void left()
             a_col--;
             grid[a_row][a_col] = 'A';
         }
+        else if (grid[a_row][a_col - 1] == 'P')
+        {
+            zombie_health -= 10;
+            cout << "Zombie health decrease by 10" << endl;
+            cout << " " << endl;
+            grid[a_row][a_col] = ' ';
+            a_col--;
+            grid[a_row][a_col] = 'A';
+        }
         else
         {
             grid[a_row][a_col] = ' ';
@@ -539,6 +566,15 @@ void right()
         {
             alien_health += 10;
             cout << "Alien Health increase by 10" << endl;
+            cout << " " << endl;
+            grid[a_row][a_col] = ' ';
+            a_col--;
+            grid[a_row][a_col] = 'A';
+        }
+        else if (grid[a_row][a_col + 1] == 'P')
+        {
+            zombie_health -= 10;
+            cout << "Zombie health decrease by 10" << endl;
             cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_col--;
