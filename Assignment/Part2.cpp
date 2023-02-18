@@ -88,7 +88,7 @@ void createGrid(int rows, int columns, int z)
     int zombiePlaced = 0;
     int zombie_health = rand() % 100 + 1;
     int alien_health = zombie_health + 20 + rand() % 10;
-
+//gridbox**
     vector<vector<char>> grid(rows, vector<char>(columns));
 
     for (int i = 0; i < rows; i++)
@@ -145,7 +145,7 @@ void createGrid(int rows, int columns, int z)
 
     int a_row = midRow - 1;
     int a_col = midCol - 1;
-
+//movement alien**
     string move;
     while (true)
     {
@@ -177,61 +177,91 @@ void createGrid(int rows, int columns, int z)
             cout << endl;
         }
 
+        if (zombiePlaced == 0)
+        {
+            cout << "Congratulations! You have finished the game." << endl;
+            break;
+        }
+
         cout << "Alien Health :" << alien_health << "\n";
-        cout << "Zombie Health :" << zombie_health << "\n";
         cout << "Enter command: ";
         cin >> move;
+        bool validCommand = true;
         if (move == "up")
+{
+    while (a_row - 1 >= 0 && grid[a_row - 1][a_col] != '|' && grid[a_row - 1][a_col] != '-')
+    {
+        if (grid[a_row - 1][a_col] == 'R')
         {
-            while (a_row - 1 >= 0 && grid[a_row - 1][a_col] != '|' && grid[a_row - 1][a_col] != '-')
-            {
-                if (grid[a_row - 1][a_col] != 'Z')
-                {
-                    grid[a_row][a_col] = ' ';
-                    a_row--;
-                    grid[a_row][a_col] = 'A';
-                }
-                else
-                {
-                    alien_health--;
-                    grid[a_row][a_col] = ' ';
-                    a_row--;
-                    grid[a_row][a_col] = 'A';
-                }
-            }
+            alien_health += 5;
+            grid[a_row - 1][a_col] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row--;                      // Move the alien to the new position
+            break;
         }
-        else if (move == "down")
+        else if (grid[a_row - 1][a_col] == 'Z')
         {
-            while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-')
-            {
-                if (grid[a_row + 1][a_col] != 'Z')
-                {
-                    grid[a_row][a_col] = ' ';
-                    a_row++;
-                    grid[a_row][a_col] = 'A';
-                }
-                else
-                {
-                    alien_health--;
-                    grid[a_row][a_col] = ' ';
-                    a_row++;
-                    grid[a_row][a_col] = 'A';
-                }
-            }
+            grid[a_row - 1][a_col] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row--;                      // Move the alien to the new position
+            break;
         }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_row--;
+            grid[a_row][a_col] = 'A';
+        }
+    }
+}
+else if (move == "down")
+{
+    while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-')
+    {
+        if (grid[a_row + 1][a_col] == 'R')
+        {
+            alien_health += 5;
+            grid[a_row + 1][a_col] = 'A'; // Replace the rock with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else if (grid[a_row + 1][a_col] == 'Z')
+        {
+            grid[a_row + 1][a_col] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
+        else
+        {
+            grid[a_row][a_col] = ' ';
+            a_row++;
+            grid[a_row][a_col] = 'A';
+        }
+    }
+}
         else if (move == "left")
         {
             while (a_col - 1 >= 0 && grid[a_row][a_col - 1] != '|' && grid[a_row][a_col - 1] != '-')
             {
-                if (grid[a_row][a_col - 1] != 'Z')
+                if (grid[a_row][a_col - 1] == 'R')
                 {
-                    grid[a_row][a_col] = ' ';
-                    a_col--;
-                    grid[a_row][a_col] = 'A';
+                    alien_health += 5;
+                    grid[a_row][a_col - 1] = 'A'; // Replace the rock with the alien
+                    grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+                    a_col--;                      // Move the alien to the new position
+                    break;
                 }
+                else if (grid[a_row][a_col - 1] == 'Z')
+        {
+            grid[a_row][a_col - 1] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
                 else
                 {
-                    alien_health--;
                     grid[a_row][a_col] = ' ';
                     a_col--;
                     grid[a_row][a_col] = 'A';
@@ -242,22 +272,49 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_col + 1 < columns && grid[a_row][a_col + 1] != '|' && grid[a_row][a_col + 1] != '-')
             {
-                if (grid[a_row][a_col + 1] != 'Z')
+                if (grid[a_row][a_col + 1] == 'R')
                 {
-                    grid[a_row][a_col] = ' ';
-                    a_col++;
-                    grid[a_row][a_col] = 'A';
+                    alien_health += 5;
+                    grid[a_row][a_col + 1] = 'A'; // Replace the rock with the alien
+                    grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+                    a_col++;                      // Move the alien to the new position
+                    break;
                 }
+                else if (grid[a_row][a_col + 1] == 'Z')
+        {
+            grid[a_row][a_col + 1] = 'A'; // Replace the zombie with the alien
+            grid[a_row][a_col] = ' ';     // Clear the original position of the alien
+            a_row++;                      // Move the alien to the new position
+            break;
+        }
                 else
                 {
-                    alien_health--;
                     grid[a_row][a_col] = ' ';
                     a_col++;
                     grid[a_row][a_col] = 'A';
                 }
             }
         }
-        else if (move != "Help" || move != "help" || move != "Help")
+        else if (move == "arrow")
+        {
+            // Switch the direction of an arrow object
+        }
+        else if (move == "save")
+        {
+            // Save the current game to a file
+        }
+        else if (move == "load")
+        {
+            // Load a saved game from a file
+        }
+        else if (move == "quit")
+        {
+            // Quit the game while still in play
+            std::cout << "Thanks for playing! Exiting the game..." << std::endl;
+            // Call any necessary cleanup functions or close any resources
+            exit(0); // This will immediately exit the program with a status code of 0
+        }
+        else if (move == "help" || move == "Help")
         {
             cout << " " << endl;
             cout << " " << endl;
@@ -275,10 +332,14 @@ void createGrid(int rows, int columns, int z)
         }
         else
         {
-            alien_health--;
-            grid[a_row][a_col] = ' ';
-            a_col++;
-            grid[a_row][a_col] = 'A';
+            validCommand = false;
+        }
+
+        if (!validCommand)
+        {
+            cout << " " << endl;
+            cout << "Invalid command entered." << endl;
+            cout << " " << endl;
         }
     }
 }
