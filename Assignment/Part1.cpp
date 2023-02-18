@@ -9,13 +9,11 @@
 // **
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <ctime>
+#include <string>
 #include <cstdlib>
-#include <iomanip>
+#include <ctime>
 using namespace std;
-
+#include <iomanip>
 
 void intro()
 {
@@ -81,62 +79,89 @@ void selection()
     }
 }
 
-void createGrid(int rows, int columns, int z) {
+void createGrid(int rows, int columns, int z)
+{
     srand(time(0));
     int midRow = (rows + 1) / 2;
     int midCol = (columns + 1) / 2;
     int zombiePlaced = 0;
-
-    vector<vector<vector<char>>> grid(rows, vector<vector<char>>(columns, vector<char>(1)));
-
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            if (i == midRow - 1 && j == midCol - 1) {
-                grid[i][j][0] = 'A';
-            } else {
-                int randomNum = rand() % 8;
-                if (randomNum == 0 && zombiePlaced < z) {
-                    grid[i][j][0] = 'Z';
-                    zombiePlaced++;
-                } else if (randomNum == 1) {
-                    grid[i][j][0] = 'R';
-                } else if (randomNum == 2) {
-                    grid[i][j][0] = '^';
-                } else if (randomNum == 3) {
-                    grid[i][j][0] = '<';
-                } else if (randomNum == 4) {
-                    grid[i][j][0] = '>';
-                } else if (randomNum == 5) {
-                    grid[i][j][0] = 'v';
-                } else if (randomNum == 6) {
-                    grid[i][j][0] = 'P';
-                } else if (randomNum == 7) {
-                    grid[i][j][0] = 'H';
-                } else {
-                    grid[i][j][0] = ' ';
-                }
-            }
-        }
-    }
-
     cout << "  ";
-    for (int i = 1; i <= columns; i++) {
+    for (int i = 1; i <= columns; i++)
+    {
         cout << setw(3) << i << " ";
     }
     cout << endl;
     cout << "  ";
-    for (int i = 0; i < (columns * 4) + 3; i++) {
+    for (int i = 0; i < (columns * 4) + 3; i++)
+    {
         cout << "-";
     }
     cout << endl;
-    for (int i = 0; i < rows; i++) {
-        cout << setw(2) << i + 1 << " |";
-        for (int j = 0; j < columns; j++) {
-            cout << setw(3) << grid[i][j][0] << "|";
+    for (int i = 1; i <= rows; i++)
+    {
+        cout << setw(2) << i << " |";
+        for (int j = 1; j <= columns; j++)
+        {
+            if (i == midRow && j == midCol)
+            {
+                cout << setw(3) << "A"
+                     << "|";
+            }
+            else
+            {
+                int randomNum = rand() % 8;
+                if (randomNum == 0 && zombiePlaced < z)
+                {
+                    cout << setw(3) << "Z"
+                         << "|";
+                    zombiePlaced++;
+                }
+                else if (randomNum == 1)
+                {
+                    cout << setw(3) << "R"
+                         << "|";
+                }
+                else if (randomNum == 2)
+                {
+                    cout << setw(3) << "^"
+                         << "|";
+                }
+                else if (randomNum == 3)
+                {
+                    cout << setw(3) << "<"
+                         << "|";
+                }
+                else if (randomNum == 4)
+                {
+                    cout << setw(3) << ">"
+                         << "|";
+                }
+                else if (randomNum == 5)
+                {
+                    cout << setw(3) << "v"
+                         << "|";
+                }
+                /*else if (randomNum == 6)
+                {
+                    cout << setw(3) << "P"
+                         << "|";
+                }
+                else if (randomNum == 7)
+                {
+                    cout << setw(3) << "H"
+                         << "|";
+                }*/
+                else
+                {
+                    cout << setw(3) << " "
+                         << "|";
+                }
+            }
         }
         cout << endl;
         cout << " ";
-        for (int i = 0; i < (columns * 4) + 3; i++) {
+        for (int i = 0; i < (columns * 4) + 3; i++)
+        {
             cout << "-";
         }
         cout << endl;
