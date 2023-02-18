@@ -33,11 +33,15 @@ string layout;
 bool validCommand;
 void command();
 void start();
+void zombiehealth();
 
 void AposRow();
 void AposCol();
 
 int alien_health, zombie_health;
+int num_zombies;
+int range;
+int alien_attack;
 
 int a_row, a_col;
 void up();
@@ -57,8 +61,9 @@ int main()
     rows = 5;
     cout << "Number Of Columns : 7" << endl;
     columns = 7;
-    cout << "Number Of Zombie : 3" << endl;
-    z = 3;
+    cout << "Number Of Zombie : 4" << endl;
+    z = 4;
+    num_zombies = 4;
     cout << "Do you want to proceed with this setting (Y/N): " << endl;
     cin >> eleh;
     if (eleh == "Y" || eleh == "y")
@@ -87,6 +92,8 @@ int main()
         {
             cout << "Enter the amount of zombies that u want: ";
             cin >> z;
+            cin >> num_zombies;
+            return 0;
             cout << " " << endl;
             if (z < 2 || z > 9)
             {
@@ -168,13 +175,25 @@ void selection()
     }
 }
 
+void zombiehealth()
+{
+    int zombie_health = rand() % 100 + 1;
+    int range = rand() % 6 + 1;
+    int zombie_attack = rand() % 5 + 5;
+    int alien_health = zombie_health + 20 + rand() % 10;
+    int alien_attack = zombie_attack + rand() % 10 + 1;
+    cout << "Alien " << " - Health: " << alien_health << ", Attack: " << alien_attack << endl;
+    for (int i = 1; i <= num_zombies; i++)
+    {
+        cout << "Zombie " << i << " - Health: " << zombie_health << ", Range: " << range << ", Attack: " << zombie_attack << endl;
+    }
+}
+
 void createGrid()
 {
     srand(time(0));
     midRow = (rows + 1) / 2;
     midCol = (columns + 1) / 2;
-    zombie_health = rand() % 100 + 1;
-    alien_health = zombie_health + 20 + rand() % 10;
     zombiePlaced = 0;
     a_row = midRow - 1;
     a_col = midCol - 1;
@@ -295,8 +314,9 @@ void AposCol()
 
 void start()
 {
-    cout << "Alien Health :" << alien_health << "\n";
-    cout << "Zombie Health :" << zombie_health << "\n";
+    int num_zombies;
+    srand(time(NULL));  // seed the random number generator with current time
+    zombiehealth();
     cout << " " << endl;
     cout << "The options for moving the alien are: up, down, left, right" << endl;
     cout << " " << endl;
