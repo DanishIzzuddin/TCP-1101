@@ -71,7 +71,7 @@ void selection()
             {
                 cout << "Invalid input, please enter Y or N\n";
             }
-        } while (answer != 'Y' || answer != 'y' || answer != 'N' || answer != 'n');
+        } while (answer != 'Y' && answer != 'y' && answer != 'N' && answer != 'n');
     }
     else
     {
@@ -185,30 +185,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_row - 1 >= 0 && grid[a_row - 1][a_col] != '|' && grid[a_row - 1][a_col] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row - 1][a_col] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -228,30 +204,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row + 1][a_col] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -271,30 +223,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_col - 1 >= 0 && grid[a_row][a_col - 1] != '|' && grid[a_row][a_col - 1] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row][a_col - 1] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -314,32 +242,15 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_col + 1 < columns && grid[a_row][a_col + 1] != '|' && grid[a_row][a_col + 1] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row][a_col + 1] != 'Z')
                 {
+                    grid[a_row][a_col] = ' ';
+                    a_col++;
+                    grid[a_row][a_col] = 'A';
+                }
+                else
+                {
+                    alien_health--;
                     grid[a_row][a_col] = ' ';
                     a_col++;
                     grid[a_row][a_col] = 'A';
