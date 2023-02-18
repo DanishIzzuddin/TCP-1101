@@ -404,6 +404,8 @@ void up()
         if (grid[a_row - 1][a_col] == 'R')
         {
             alien_health += 5;
+            cout << "Alien Health increase by 5" << endl;
+            cout << " " << endl;
             grid[a_row - 1][a_col] = 'A'; // Replace the rock with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_row--;                      // Move the alien to the new position
@@ -419,6 +421,8 @@ void up()
         else if (grid[a_row - 1][a_col] == 'H')
         {
             alien_health += 10;
+            cout << "Alien Health increase by 10" << endl;
+            cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_row--;
             grid[a_row][a_col] = 'A';
@@ -439,6 +443,8 @@ void down()
         if (grid[a_row + 1][a_col] == 'R')
         {
             alien_health += 5;            // Alien Health Increase by 5
+            cout << "Alien Health increase by 5" << endl;
+            cout << " " << endl;
             grid[a_row + 1][a_col] = 'A'; // Replace the rock with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_row++;                      // Move the alien to the new position
@@ -454,6 +460,8 @@ void down()
         else if (grid[a_row + 1][a_col] == 'H')
         {
             alien_health += 10;
+            cout << "Alien Health increase by 10" << endl;
+            cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_row++;
             grid[a_row][a_col] = 'A';
@@ -474,6 +482,8 @@ void left()
         if (grid[a_row][a_col - 1] == 'R')
         {
             alien_health += 5;
+            cout << "Alien Health increase by 5" << endl;
+            cout << " " << endl;
             grid[a_row][a_col - 1] = 'A'; // Replace the rock with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_col--;                      // Move the alien to the new position
@@ -489,6 +499,8 @@ void left()
         else if (grid[a_row][a_col - 1] == 'H')
         {
             alien_health += 10;
+            cout << "Alien Health increase by 10" << endl;
+            cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_col--;
             grid[a_row][a_col] = 'A';
@@ -509,6 +521,8 @@ void right()
         if (grid[a_row][a_col + 1] == 'R')
         {
             alien_health += 5;
+            cout << "Alien Health increase by 5" << endl;
+            cout << " " << endl;
             grid[a_row][a_col + 1] = 'A'; // Replace the rock with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_col++;                      // Move the alien to the new position
@@ -524,6 +538,8 @@ void right()
         else if (grid[a_row][a_col + 1] == 'H')
         {
             alien_health += 10;
+            cout << "Alien Health increase by 10" << endl;
+            cout << " " << endl;
             grid[a_row][a_col] = ' ';
             a_col--;
             grid[a_row][a_col] = 'A';
