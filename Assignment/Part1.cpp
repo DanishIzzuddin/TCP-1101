@@ -21,7 +21,7 @@ void selection();
 void customization();
 
 void createGrid(int rows, int columns, int z);
-void layoutGrid();
+void displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health);
 
 void command();
 void start();
@@ -67,7 +67,7 @@ int main()
     } while (z < 2 || z > 9);
 
     createGrid(rows, columns, z);
-    layoutGrid();
+    displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health);
     start();
 }
 
@@ -200,44 +200,40 @@ void createGrid(int rows, int columns, int z)
     int a_row = midRow - 1;
     int a_col = midCol - 1;
 
-    layoutGrid();
+    displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health);
 }
-
-void layoutGrid()
+void displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health)
 {
-    while (true)
+    cout << "  ";
+    for (int i = 1; i <= columns; i++)
     {
-        cout << "  ";
-        for (int i = 1; i <= columns; i++)
+        cout << setw(3) << i << " ";
+    }
+    cout << endl;
+    cout << "  ";
+    for (int i = 0; i < (columns * 4) + 3; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
+    for (int i = 0; i < rows; i++)
+    {
+        cout << setw(2) << i + 1 << " |";
+        for (int j = 0; j < columns; j++)
         {
-            cout << setw(3) << i << " ";
+            cout << setw(3) << grid[i][j] << "|";
         }
         cout << endl;
-        cout << "  ";
+        cout << " ";
         for (int i = 0; i < (columns * 4) + 3; i++)
         {
             cout << "-";
         }
         cout << endl;
-        for (int i = 0; i < rows; i++)
-        {
-            cout << setw(2) << i + 1 << " |";
-            for (int j = 0; j < columns; j++)
-            {
-                cout << setw(3) << grid[i][j] << "|";
-            }
-            cout << endl;
-            cout << " ";
-            for (int i = 0; i < (columns * 4) + 3; i++)
-            {
-                cout << "-";
-            }
-            cout << endl;
-        }
     }
 
-    cout << "Alien Health :" << alien_health << "\n";
-    cout << "Zombie Health :" << zombie_health << "\n";
+    cout << "Alien Health: " << alien_health << endl;
+    cout << "Zombie Health: " << zombie_health << endl;
     cout << " " << endl;
     cout << "Enter command: ";
     cin >> com;
@@ -275,7 +271,7 @@ void start()
             start();
         }
 
-        layoutGrid();
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health);
     }
 }
 
@@ -329,11 +325,11 @@ void command()
         cout << " " << endl;
         cout << "Invalid command entered." << endl;
         cout << " " << endl;
-        layoutGrid();
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health);
     }
 }
 
-void moveAlien(string move, char** grid, int rows, int columns, int& a_row, int& a_col, int& alien_health) 
+void moveAlien(string move, vector<vector<char>> grid, int rows, int columns, int& a_row, int& a_col, int& alien_health) 
 {
     if (move == "up") 
     {
@@ -352,7 +348,7 @@ void moveAlien(string move, char** grid, int rows, int columns, int& a_row, int&
                 grid[a_row][a_col] = 'A';
             }
         }
-        layoutGrid(); // Display the updated grid
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health); // Display the updated grid
     } 
     else if (move == "down") {
         while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-') {
@@ -368,7 +364,7 @@ void moveAlien(string move, char** grid, int rows, int columns, int& a_row, int&
                 grid[a_row][a_col] = 'A';
             }
         }
-        layoutGrid(); // Display the updated grid
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health); // Display the updated grid
     } 
     else if (move == "left") {
         while (a_col - 1 >= 0 && grid[a_row][a_col - 1] != '|' && grid[a_row][a_col - 1] != '-') {
@@ -384,7 +380,7 @@ void moveAlien(string move, char** grid, int rows, int columns, int& a_row, int&
                 grid[a_row][a_col] = 'A';
             }
         }
-        layoutGrid(); // Display the updated grid
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health); // Display the updated grid
     } 
     else if (move == "right") {
         while (a_col + 1 < columns && grid[a_row][a_col + 1] != '|' && grid[a_row][a_col + 1] != '-') {
@@ -400,6 +396,6 @@ void moveAlien(string move, char** grid, int rows, int columns, int& a_row, int&
                 grid[a_row][a_col] = 'A';
             }
         }
-        layoutGrid(); // Display the updated grid
+        displayGrid(vector<vector<char>> grid, int rows, int columns, int alien_health, int zombie_health); // Display the updated grid
     }
 }
