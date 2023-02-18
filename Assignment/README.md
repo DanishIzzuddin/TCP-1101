@@ -35,7 +35,7 @@ Please DO NOT change the Progress Log below. Leave it as it is.
 Please replace the following with your group members' names. 
 
 - Sivaharriharann
-- Danish Izzuddin
+- Ahmad Danish Izzuddin
 - Arief fahmi
 
 
