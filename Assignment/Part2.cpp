@@ -71,7 +71,7 @@ void selection()
             {
                 cout << "Invalid input, please enter Y or N\n";
             }
-        } while (answer != 'Y' || answer != 'y' || answer != 'N' || answer != 'n');
+        } while (answer != 'Y' && answer != 'y' && answer != 'N' && answer != 'n');
     }
     else
     {
@@ -179,36 +179,12 @@ void createGrid(int rows, int columns, int z)
 
         cout << "Alien Health :" << alien_health << "\n";
         cout << "Zombie Health :" << zombie_health << "\n";
-        cout << "Enter move (up, down, left, right): ";
+        cout << "Enter command: ";
         cin >> move;
         if (move == "up")
         {
             while (a_row - 1 >= 0 && grid[a_row - 1][a_col] != '|' && grid[a_row - 1][a_col] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row - 1][a_col] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -228,30 +204,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_row + 1 < rows && grid[a_row + 1][a_col] != '|' && grid[a_row + 1][a_col] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row + 1][a_col] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -271,30 +223,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_col - 1 >= 0 && grid[a_row][a_col - 1] != '|' && grid[a_row][a_col - 1] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row][a_col - 1] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -314,30 +242,6 @@ void createGrid(int rows, int columns, int z)
         {
             while (a_col + 1 < columns && grid[a_row][a_col + 1] != '|' && grid[a_row][a_col + 1] != '-')
             {
-                if (grid[a_row - 1][a_col] == '^')
-                {
-                    move = "up"; // Change movement direction to "up"
-                    grid[a_row][a_col] = '^';
-                    a_row--;
-                }
-                if (grid[a_row + 1][a_col] == 'v')
-                {
-                    move = "down"; // Change movement direction to "down"
-                    grid[a_row][a_col] = 'v';
-                    a_row++;
-                }
-                if (grid[a_row][a_col - 1] == '<')
-                {
-                    move = "left"; // Change movement direction to "left"
-                    grid[a_row][a_col] = '<';
-                    a_col--;
-                }
-                if (grid[a_row][a_col + 1] == '>')
-                {
-                    move = "right"; // Change movement direction to "right"
-                    grid[a_row][a_col] = '>';
-                    a_col++;
-                }
                 if (grid[a_row][a_col + 1] != 'Z')
                 {
                     grid[a_row][a_col] = ' ';
@@ -352,6 +256,29 @@ void createGrid(int rows, int columns, int z)
                     grid[a_row][a_col] = 'A';
                 }
             }
+        }
+        else if (move != "Help" || move != "help" || move != "Help")
+        {
+            cout << " " << endl;
+            cout << " " << endl;
+            cout << "Commands: " << endl;
+            cout << "  up - Move alien up" << endl;
+            cout << "  down - Move alien down" << endl;
+            cout << "  left - Move alien left" << endl;
+            cout << "  right - Move alien right" << endl;
+            cout << "  arrow - Switch the direction of an arrow object" << endl;
+            cout << "  save - Save the current game to a file" << endl;
+            cout << "  load - Load a saved game from a file" << endl;
+            cout << "  quit - Quit the game while still in play" << endl;
+            cout << " " << endl;
+            cout << " " << endl;
+        }
+        else
+        {
+            alien_health--;
+            grid[a_row][a_col] = ' ';
+            a_col++;
+            grid[a_row][a_col] = 'A';
         }
     }
 }
