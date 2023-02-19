@@ -371,10 +371,12 @@ void command()
     else if (com == "save")
     {
         // Save the current game to a file
+        cout << "This Componenent has not been implemented yet" << endl;
     }
     else if (com == "load")
     {
         // Load a saved game from a file
+        cout << "This Componenent has not been implemented yet" << endl;
     }
     else if (com == "quit")
     {
@@ -420,7 +422,7 @@ void up()
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_row--;                      // Move the alien to the new position
             alien_health += 5;
-            cout << "Alien Health increase by 5" << endl;
+            cout << "Alien Found Mystic Ball,Alien Health increase by 5" << endl;
             cout << " " << endl;
             break;
         }
@@ -514,7 +516,7 @@ void down()
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_row++;                      // Move the alien to the new position
             alien_health += 5;
-            cout << "Alien Health increase by 5" << endl;
+            cout << "Alien Found Mystic Ball,Alien Health increase by 5" << endl;
             cout << " " << endl;
             break;
         }
@@ -606,7 +608,7 @@ void left()
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_col--;                      // Move the alien to the new position
             alien_health += 5;
-            cout << "Alien Health increase by 5" << endl;
+            cout << "Alien Found Mystic Ball,Alien Health increase by 5" << endl;
             cout << " " << endl;
             break;
         }
@@ -700,7 +702,7 @@ void right()
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
             a_col++;                      // Move the alien to the new position
             alien_health += 5;
-            cout << "Alien Health increase by 5" << endl;
+            cout << "Alien Found Mystic Ball,Alien Health increase by 5" << endl;
             cout << " " << endl;
             break;
         }
