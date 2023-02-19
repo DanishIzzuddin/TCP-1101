@@ -14,6 +14,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iomanip>
+#include <limits>
 using namespace std;
 
 void intro();
@@ -21,7 +22,6 @@ void selection();
 void customization();
 
 int rows, columns, z, i, j;
-int zombiePlaced;
 int midRow, midCol;
 void createGrid();
 
@@ -33,16 +33,14 @@ string layout;
 bool validCommand;
 void command();
 void start();
-void zombiehealth();
 
 void AposRow();
 void AposCol();
 
-int alien_health, zombie_health;
-int num_zombies;
-int range;
-int alien_attack;
 int zombie;
+int zombiePlaced;
+int alien_health, zombie_health;
+
 
 int a_row, a_col;
 void up();
@@ -62,9 +60,8 @@ int main()
     rows = 5;
     cout << "Number Of Columns : 7" << endl;
     columns = 7;
-    cout << "Number Of Zombie : 4" << endl;
-    z = 4;
-    num_zombies = 4;
+    cout << "Number Of Zombie : 3" << endl;
+    z = 3;
     cout << "Do you want to proceed with this setting (Y/N): " << endl;
     cin >> eleh;
     if (eleh == "Y" || eleh == "y")
@@ -78,12 +75,13 @@ int main()
     {
         do
         {
-            cout << "Please customise the setting of the game first"  << endl;
+            zombiePlaced = z;
+            cout << "Please customise the setting of the game first" << endl;
             cout << " " << endl;
             cout << " " << endl;
-            cout <<"Enter the number of rows: ";
+            cout << "Enter the number of rows: ";
             cin >> rows;
-            cout <<"Enter the number of columns: ";
+            cout << "Enter the number of columns: ";
             cin >> columns;
             cout << " " << endl;
             if (rows % 2 == 0 || columns % 2 == 0)
@@ -91,10 +89,14 @@ int main()
         } while (rows % 2 == 0, columns % 2 == 0);
         do
         {
-            cout << "Enter the amount of zombies that u want: ";
-            cin >> z;
-            cin >> num_zombies;
-            return 0;
+            cout << "Enter the amount of zombies that you want: ";
+            if (!(cin >> z))
+            {
+                cin.clear();                                         // clear error state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard input
+                cout << "Invalid input, please enter a number between 2 and 9" << endl;
+                continue; // loop back to prompt
+            }
             cout << " " << endl;
             if (z < 2 || z > 9)
             {
@@ -137,13 +139,13 @@ void intro()
 
 void selection()
 {
-
     char answer;
     cout << "Do you want to start the game (Y/N) :";
     cin >> answer;
     if (answer == 'Y' || answer == 'y')
     {
         cout << "Have Fun!! :) \n";
+        cout << "Please customise the setting of the game first\n";
         cout << " " << endl;
     }
     else if (answer == 'N' || answer == 'n')
@@ -173,20 +175,6 @@ void selection()
     {
         cout << "Invalid input, please enter Y or N\n";
         selection();
-    }
-}
-
-void zombiehealth()
-{
-    int zombie_health = rand() % 100 + 1;
-    int range = rand() % 6 + 1;
-    int zombie_attack = rand() % 5 + 5;
-    int alien_health = zombie_health + 20 + rand() % 10;
-    int alien_attack = zombie_attack + rand() % 10 + 1;
-    cout << "Alien " << " - Health: " << alien_health << ", Attack: " << alien_attack << endl;
-    for (int i = 1; i <= num_zombies; i++)
-    {
-        cout << "Zombie " << i << " - Health: " << zombie_health << ", Range: " << range << ", Attack: " << zombie_attack << endl;
     }
 }
 
@@ -308,6 +296,7 @@ void createGrid()
     }
 }
 
+
 void AposRow()
 {
     grid[a_row][a_col] = 'A';
@@ -320,13 +309,12 @@ void AposCol()
 
 void start()
 {
-    int num_zombies;
-    srand(time(NULL));  // seed the random number generator with current time
-    zombiehealth();
+    cout << "Alien Health :" << alien_health << "\n";
+    cout << "Zombie Health :" << zombie_health << "\n";
     cout << " " << endl;
     cout << "The options for moving the alien are: up, down, left, right" << endl;
     cout << " " << endl;
-    cout << "Enter the direction that you want to move (or enter a help): ";
+    cout << "Enter the direction that you want to move (or enter = menu): ";
     cin >> movement;
     cout << " " << endl;
 
@@ -364,7 +352,7 @@ void start()
 
 void command()
 {
-    cout << "Enter command: \n";
+    cout << "Enter command(To see more info type = help): \n";
     cin >> com;
     cout << " " << endl;
 
@@ -397,11 +385,7 @@ void command()
         cout << " " << endl;
         cout << " " << endl;
         cout << "Commands: " << endl;
-        cout << "Start - to move the alien" << endl;
-        cout << "  up - Move alien up" << endl;
-        cout << "  down - Move alien down" << endl;
-        cout << "  left - Move alien left" << endl;
-        cout << "  right - Move alien right" << endl;
+        cout << "Start - to go back to moving the alien" << endl;
         cout << "  arrow - Switch the direction of an arrow object" << endl;
         cout << "  save - Save the current game to a file" << endl;
         cout << "  load - Load a saved game from a file" << endl;
@@ -437,7 +421,7 @@ void up()
             a_row--;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row - 1][a_col] = zombiePlaced)
+        else if (grid[a_row - 1][a_col] == 'Z')
         {
             grid[a_row - 1][a_col] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
@@ -485,7 +469,7 @@ void down()
             a_row++;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row + 1][a_col] = zombiePlaced)
+        else if (grid[a_row + 1][a_col] == 'Z')
         {
             grid[a_row + 1][a_col] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
@@ -533,7 +517,7 @@ void left()
             a_col--;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row][a_col - 1] = zombiePlaced)
+        else if (grid[a_row][a_col - 1] == 'Z')
         {
             grid[a_row][a_col - 1] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
@@ -581,7 +565,7 @@ void right()
             a_col++;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row][a_col + 1] = zombiePlaced)
+        else if (grid[a_row][a_col + 1] == 'Z')
         {
             grid[a_row][a_col + 1] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
