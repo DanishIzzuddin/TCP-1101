@@ -14,7 +14,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <iomanip>
-#include <numeric>
 #include <limits>
 using namespace std;
 
@@ -23,9 +22,7 @@ void selection();
 void customization();
 
 int rows, columns, z, i, j;
-int zombiePlaced;
 int midRow, midCol;
-int zombie;
 void createGrid();
 
 vector<vector<char>> grid;
@@ -36,17 +33,16 @@ string layout;
 bool validCommand;
 void command();
 void start();
-void zombiehealth();
 
 void AposRow();
 void AposCol();
 
+int zombie;
+int zombiePlaced;
 int alien_health, zombie_health;
-int num_zombies;
-int range;
-int alien_attack;
 
 int a_row, a_col;
+void arrow();
 void up();
 void down();
 void left();
@@ -143,13 +139,13 @@ void intro()
 
 void selection()
 {
-
     char answer;
     cout << "Do you want to start the game (Y/N) :";
     cin >> answer;
     if (answer == 'Y' || answer == 'y')
     {
         cout << "Have Fun!! :) \n";
+        cout << "Please customise the setting of the game first\n";
         cout << " " << endl;
     }
     else if (answer == 'N' || answer == 'n')
@@ -182,25 +178,13 @@ void selection()
     }
 }
 
-void zombiehealth()
-{
-    int zombie_health = rand() % 100 + 1;
-    int range = rand() % 6 + 1;
-    int zombie_attack = rand() % 5 + 5;
-    int alien_health = zombie_health + 20 + rand() % 10;
-    int alien_attack = zombie_attack + rand() % 10 + 1;
-    cout << "Alien " << " - Health: " << alien_health << ", Attack: " << alien_attack << endl;
-    for (int i = 1; i <= z; i++)
-    {
-        cout << "Zombie " << i << " - Health: " << zombie_health << ", Range: " << range << ", Attack: " << zombie_attack << endl;
-    }
-}
-
 void createGrid()
 {
     srand(time(0));
     midRow = (rows + 1) / 2;
     midCol = (columns + 1) / 2;
+    zombie_health = rand() % 100 + 1;
+    alien_health = zombie_health + 20 + rand() % 10;
     zombiePlaced = 0;
     a_row = midRow - 1;
     a_col = midCol - 1;
@@ -222,6 +206,7 @@ void createGrid()
             {
                 cout << grid[i][j] << "  ";
             }
+
             else
             {
                 int randomNum = rand() % 8;
@@ -230,7 +215,7 @@ void createGrid()
                     grid[i][j] == 'Z';
 
                     zombiePlaced++;
-                    grid[i][j] = '0' + (zombiePlaced % 9) ;
+                    grid[i][j] = '0' + (zombiePlaced % 9);
                 }
                 else if (randomNum == 1)
                 {
@@ -311,25 +296,14 @@ void createGrid()
     }
 }
 
-void AposRow()
-{
-    grid[a_row][a_col] = 'A';
-}
-
-void AposCol()
-{
-    grid[a_row][a_col] = 'A';
-}
-
 void start()
 {
-    int num_zombies;
-    srand(time(NULL));  // seed the random number generator with current time
-    zombiehealth();
+    cout << "Alien Health :" << alien_health << "\n";
+    cout << "Zombie Health :" << zombie_health << "\n";
     cout << " " << endl;
     cout << "The options for moving the alien are: up, down, left, right" << endl;
     cout << " " << endl;
-    cout << "Enter the direction that you want to move (or enter a help): ";
+    cout << "Enter the direction that you want to move (or enter = menu): ";
     cin >> movement;
     cout << " " << endl;
 
@@ -354,7 +328,7 @@ void start()
         right();
         validCommand = true;
     }
-    else if (movement == "help")
+    else if (movement == "menu")
     {
         command();
     }
@@ -367,7 +341,7 @@ void start()
 
 void command()
 {
-    cout << "Enter command: \n";
+    cout << "Enter command(To see more info type = help): \n";
     cin >> com;
     cout << " " << endl;
 
@@ -378,7 +352,7 @@ void command()
     }
     else if (com == "arrow")
     {
-        // Switch the direction of an arrow object
+        arrow();
     }
     else if (com == "save")
     {
@@ -400,11 +374,7 @@ void command()
         cout << " " << endl;
         cout << " " << endl;
         cout << "Commands: " << endl;
-        cout << "Start - to move the alien" << endl;
-        cout << "  up - Move alien up" << endl;
-        cout << "  down - Move alien down" << endl;
-        cout << "  left - Move alien left" << endl;
-        cout << "  right - Move alien right" << endl;
+        cout << "Start - to go back to moving the alien" << endl;
         cout << "  arrow - Switch the direction of an arrow object" << endl;
         cout << "  save - Save the current game to a file" << endl;
         cout << "  load - Load a saved game from a file" << endl;
@@ -440,7 +410,7 @@ void up()
             a_row--;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row - 1][a_col] == '1' || grid[a_row - 1][a_col] == '2' || grid[a_row - 1][a_col] == '3' || grid[a_row - 1][a_col] == '4' || grid[a_row - 1][a_col] == '5' || grid[a_row - 1][a_col] == '6' || grid[a_row - 1][a_col] == '7' || grid[a_row - 1][a_col] == '8' || grid[a_row - 1][a_col] == '9'  )
+        else if (grid[a_row - 1][a_col] == 'Z')
         {
             grid[a_row - 1][a_col] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
@@ -480,7 +450,7 @@ void down()
     {
         if (grid[a_row + 1][a_col] == 'R')
         {
-            alien_health += 5;            // Alien Health Increase by 5
+            alien_health += 5; // Alien Health Increase by 5
             cout << "Alien Health increase by 5" << endl;
             cout << " " << endl;
             grid[a_row + 1][a_col] = 'A'; // Replace the rock with the alien
@@ -488,7 +458,7 @@ void down()
             a_row++;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row + 1][a_col] == '1' || grid[a_row + 1][a_col] == '2' || grid[a_row + 1][a_col] == '3' || grid[a_row + 1][a_col] == '4' || grid[a_row + 1][a_col] == '5' || grid[a_row + 1][a_col] == '6' || grid[a_row + 1][a_col] == '7' || grid[a_row + 1][a_col] == '8' || grid[a_row + 1][a_col] == '9'  )
+        else if (grid[a_row + 1][a_col] == 'Z')
         {
             grid[a_row + 1][a_col] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
@@ -510,7 +480,7 @@ void down()
             cout << "Zombie Health decrease by 10" << endl;
             cout << " " << endl;
             grid[a_row][a_col] = ' ';
-            a_row++;
+            a_row--;
             grid[a_row][a_col] = 'A';
         }
         else
@@ -536,11 +506,11 @@ void left()
             a_col--;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row][a_col - 1] == '1' || grid[a_row][a_col - 1] == '2' || grid[a_row][a_col - 1] == '3' || grid[a_row][a_col - 1] == '4' || grid[a_row][a_col - 1] == '5' || grid[a_row][a_col - 1] == '6' || grid[a_row][a_col - 1] == '7' || grid[a_row][a_col - 1] == '8' || grid[a_row][a_col - 1] == '9' )
+        else if (grid[a_row][a_col - 1] == 'Z')
         {
             grid[a_row][a_col - 1] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
-            a_col--;                      // Move the alien to the new position
+            a_row++;                      // Move the alien to the new position
             break;
         }
         else if (grid[a_row][a_col - 1] == 'H')
@@ -584,11 +554,11 @@ void right()
             a_col++;                      // Move the alien to the new position
             break;
         }
-        else if (grid[a_row][a_col + 1] == '1' || grid[a_row][a_col + 1] == '2' || grid[a_row][a_col + 1] == '3' || grid[a_row][a_col + 1] == '4' || grid[a_row][a_col + 1] == '5' || grid[a_row][a_col + 1] == '6' || grid[a_row][a_col + 1] == '7' || grid[a_row][a_col + 1] == '8' || grid[a_row][a_col + 1] == '9')
+        else if (grid[a_row][a_col + 1] == 'Z')
         {
             grid[a_row][a_col + 1] = 'A'; // Replace the zombie with the alien
             grid[a_row][a_col] = ' ';     // Clear the original position of the alien
-            a_col++;                      // Move the alien to the new position
+            a_row++;                      // Move the alien to the new position
             break;
         }
         else if (grid[a_row][a_col + 1] == 'H')
@@ -597,7 +567,7 @@ void right()
             cout << "Alien Health increase by 10" << endl;
             cout << " " << endl;
             grid[a_row][a_col] = ' ';
-            a_col++;
+            a_col--;
             grid[a_row][a_col] = 'A';
         }
         else if (grid[a_row][a_col + 1] == 'P')
@@ -606,7 +576,7 @@ void right()
             cout << "Zombie health decrease by 10" << endl;
             cout << " " << endl;
             grid[a_row][a_col] = ' ';
-            a_col++;
+            a_col--;
             grid[a_row][a_col] = 'A';
         }
         else
@@ -615,5 +585,54 @@ void right()
             a_col++;
             grid[a_row][a_col] = 'A';
         }
+    }
+}
+
+void arrow() {
+    // Find all the arrows and store their positions in a vector
+    vector<pair<int, int>> arrow_positions;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (grid[i][j] == '^' || grid[i][j] == 'v' || grid[i][j] == '<' || grid[i][j] == '>') {
+                arrow_positions.push_back({i, j});
+            }
+        }
+    }
+    
+    // Print out all the arrows and their positions
+    if (arrow_positions.empty()) {
+        cout << "No arrows found in the grid." << endl;
+    } else {
+        cout << "Arrows found in the following positions:" << endl;
+        for (const auto& pos : arrow_positions) {
+            cout << "Row: " << pos.first + 1 << ", Column: " << pos.second + 1 << ", Direction: " << grid[pos.first][pos.second] << endl;
+        }
+    }
+    
+    // Prompt the user to enter the row and column of the arrow they want to change, and the new direction
+    int row, col;
+    char new_direction;
+    cout << "Enter the row and column of the arrow you want to change (e.g. 2 3): ";
+    cin >> row >> col;
+    if (row < 1 || row > rows || col < 1 || col > columns) {
+        cout << "Invalid row or column number. Please try again." << endl;
+        arrow();
+        return;
+    }
+    cout << "Enter the new direction (up = ^, down = v, left = <, right = >): ";
+    cin >> new_direction;
+    if (new_direction != '^' && new_direction != 'v' && new_direction != '<' && new_direction != '>') {
+        cout << "Invalid direction. Please enter ^, v, <, or >." << endl;
+        arrow();
+        return;
+    }
+    
+    // Change the arrow to the new direction
+    if (grid[row-1][col-1] == '^' || grid[row-1][col-1] == 'v' || grid[row-1][col-1] == '<' || grid[row-1][col-1] == '>') {
+        grid[row-1][col-1] = new_direction;
+        cout << "Arrow changed successfully." << endl;
+        cout << " " << endl;
+    } else {
+        cout << "No arrow found at the specified location." << endl;
     }
 }
